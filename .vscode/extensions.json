@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "ms-dotnettools.csdevkit",
+    "Vue.volar",
+    "ms-azuretools.vscode-azureappservice",
+    "esbenp.prettier-vscode"
+  ]
+}

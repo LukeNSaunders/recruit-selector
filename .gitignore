@@ -1,0 +1,12 @@
+# C# build output
+server/bin/
+server/obj/
+
+# Node / Vue
+client/node_modules/
+client/dist/
+
+# Editor / OS
+.vs/
+.DS_Store
+*.user
