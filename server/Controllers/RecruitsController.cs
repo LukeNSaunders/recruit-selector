@@ -8,7 +8,7 @@ namespace Server.Controllers;
 public class RecruitsController : ControllerBase
 {
     private const int MaxRecruits = 100;
-    private const int MaxSkip = 10;
+    private const int MaxSkip = 100;
     [HttpGet]
     public IActionResult Get(int? n, int? k)
     {

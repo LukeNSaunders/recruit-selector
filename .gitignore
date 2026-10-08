@@ -1,6 +1,6 @@
 # C# build output
-server/bin/
-server/obj/
+bin/
+obj/
 
 # Node / Vue
 client/node_modules/
