@@ -4,11 +4,11 @@ namespace Server.Services;
 
 public class RecruitSelector
 {
-    public RecruitResult SelectRecruits(int n, int k)
+    public RecruitResult SelectRecruits(int recruits, int skip)
     {
-        // Make a list of recruits up to n
-        var circle = new List<int>();
-        for (int i = 1; i <= n; i++)
+        // Put recruits 1 up to the number of recruits into the circle
+        var circle = new List<int>(); for (int i = 1; i <= recruits; i++)
+        
         {
             circle.Add(i);
         }
@@ -22,9 +22,9 @@ public class RecruitSelector
         // Repeat until only one recruit is left
         while (circle.Count > 1)
         {
-            // Move forward k recruits.
+            // Move forward skip recruits.
             // If we go past the end, % takes us back to the start.
-            position = (position + k) % circle.Count;
+            position = (position + skip) % circle.Count;
 
             // Recruit gets picked and taken out of the circle
             selected.Add(circle[position]);
