@@ -1,0 +1,29 @@
+/* Styles shared across the whole app */
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  color: #1f2a1f;
+}
+
+h1 {
+  margin-bottom: 8px;
+}
+
+h2 {
+  font-size: 18px;
+  margin: 0 0 12px;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #dfe3dc;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.muted {
+  color: #7a8475;
+  margin: 0;
+}
