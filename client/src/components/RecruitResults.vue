@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import type { RecruitResult } from '../types/recruit'
 
-// The result to show, passed in from App.vue
 defineProps<{
   result: RecruitResult
 }>()
 </script>
 
 <template>
-  <!-- Selected recruits on the left, final recruit on the right -->
   <div class="results">
     <section class="card">
       <h2>Selected recruits</h2>
@@ -33,14 +31,12 @@ defineProps<{
 </template>
 
 <style scoped>
-/* Two columns side by side: the selected list gets more space than the final recruit */
 .results {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 20px;
 }
 
-/* The grid already spaces the two cards, so remove their bottom margin here */
 .results .card {
   margin-bottom: 0;
 }
@@ -80,7 +76,6 @@ defineProps<{
   color: #4b5d3a;
 }
 
-/* On small screens, stack the two sections instead */
 @media (max-width: 600px) {
   .results {
     grid-template-columns: 1fr;

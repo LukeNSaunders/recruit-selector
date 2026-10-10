@@ -1,31 +1,61 @@
+<RecruitResults v-if="result" :result="result" />
 <script setup lang="ts">
-import { ref } from 'vue'
-import RecruitForm from './components/RecruitForm.vue'
-import RecruitResults from './components/RecruitResults.vue'
-import { selectRecruits } from './services/recruitApi'
-import type { RecruitResult } from './types/recruit'
+import { ref } from "vue";
+import LoginModal from "./components/LoginModal.vue";
+import RecruitForm from "./components/RecruitForm.vue";
+import RecruitResults from "./components/RecruitResults.vue";
+import { getToken, logout } from "./services/auth";
+import { selectRecruits } from "./services/recruitApi";
+import type { RecruitResult } from "./types/recruit";
 
-const result = ref<RecruitResult | null>(null)
-const error = ref('')
+const isLoggedIn = ref(getToken() !== null);
+const showLogin = ref(false);
+const result = ref<RecruitResult | null>(null);
+const error = ref("");
+
+function handleLoggedIn() {
+  isLoggedIn.value = true;
+  showLogin.value = false;
+  error.value = "";
+}
+
+function handleLogout() {
+  logout();
+  isLoggedIn.value = false;
+  result.value = null;
+  error.value = "";
+}
 
 async function runSelection(recruits: number, skip: number) {
-  error.value = ''
-  result.value = null
+  error.value = "";
+  result.value = null;
 
   try {
-    result.value = await selectRecruits(recruits, skip)
+    result.value = await selectRecruits(recruits, skip);
   } catch (e) {
-    error.value = e instanceof Error ? e.message : 'Something went wrong. Please try again.'
+    error.value =
+      e instanceof Error ? e.message : "Something went wrong. Please try again.";
+
+    isLoggedIn.value = getToken() !== null;
+    if (!isLoggedIn.value) {
+      showLogin.value = true;
+    }
   }
 }
 </script>
 
 <template>
   <main class="page">
-    <h1>Who Comes Back Next Year?</h1>
+    <header class="header">
+      <h1>Who Comes Back Next Year?</h1>
+      <button v-if="isLoggedIn" class="secondary" @click="handleLogout">Log out</button>
+      <button v-else class="secondary" @click="showLogin = true">Log in</button>
+    </header>
+
     <p class="intro">
-      Enter how many recruits there are and how many the sergeant skips each time. We'll show who
-      gets a position, in order, and the one recruit who has to come back next year.
+      Enter how many recruits there are and how many the sergeant skips each time. We'll
+      show who gets a position, in order, and the one recruit who has to come back next
+      year.
     </p>
 
     <RecruitForm @submit="runSelection" />
@@ -33,6 +63,7 @@ async function runSelection(recruits: number, skip: number) {
     <p v-if="error" class="error">{{ error }}</p>
 
     <RecruitResults v-if="result" :result="result" />
+    <LoginModal v-if="showLogin" @close="showLogin = false" @logged-in="handleLoggedIn" />
   </main>
 </template>
 
@@ -41,6 +72,18 @@ async function runSelection(recruits: number, skip: number) {
   max-width: 800px;
   margin: 48px auto;
   padding: 0 16px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.header button {
+  padding: 8px 16px;
+  font-size: 14px;
 }
 
 .intro {
