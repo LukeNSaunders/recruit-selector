@@ -1,4 +1,3 @@
-<RecruitResults v-if="result" :result="result" />
 <script setup lang="ts">
 import { ref } from "vue";
 import LoginModal from "./components/LoginModal.vue";
@@ -12,11 +11,17 @@ const isLoggedIn = ref(getToken() !== null);
 const showLogin = ref(false);
 const result = ref<RecruitResult | null>(null);
 const error = ref("");
+const success = ref("");
 
 function handleLoggedIn() {
   isLoggedIn.value = true;
   showLogin.value = false;
   error.value = "";
+  success.value = "Successfully logged in!";
+
+  setTimeout(() => {
+    success.value = "";
+  }, 3000);
 }
 
 function handleLogout() {
@@ -24,10 +29,12 @@ function handleLogout() {
   isLoggedIn.value = false;
   result.value = null;
   error.value = "";
+  success.value = "Successfully logged out!";
 }
 
 async function runSelection(recruits: number, skip: number) {
   error.value = "";
+  success.value = "";
   result.value = null;
 
   try {
@@ -60,9 +67,11 @@ async function runSelection(recruits: number, skip: number) {
 
     <RecruitForm @submit="runSelection" />
 
+    <p v-if="success" class="success">{{ success }}</p>
     <p v-if="error" class="error">{{ error }}</p>
 
     <RecruitResults v-if="result" :result="result" />
+
     <LoginModal v-if="showLogin" @close="showLogin = false" @logged-in="handleLoggedIn" />
   </main>
 </template>
@@ -90,6 +99,15 @@ async function runSelection(recruits: number, skip: number) {
   color: #5a645a;
   line-height: 1.5;
   margin-bottom: 24px;
+}
+
+.success {
+  padding: 12px 16px;
+  color: #2f4a22;
+  background: #e6f0de;
+  border: 1px solid #b9d3a8;
+  border-radius: 8px;
+  font-weight: 600;
 }
 
 .error {
