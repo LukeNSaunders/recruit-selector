@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Server.Services;
 
 namespace Server.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/recruits")]
 public class RecruitsController : ControllerBase
 {
