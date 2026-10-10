@@ -38,7 +38,11 @@ defineProps<{
 }
 
 .results .card {
+  height: 300px;
+  box-sizing: border-box;
   margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .selected-list {
@@ -47,7 +51,11 @@ defineProps<{
   margin: 0;
   display: flex;
   flex-wrap: wrap;
+  align-content: flex-start;
   gap: 8px;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 .selected-list li {
@@ -63,8 +71,6 @@ defineProps<{
   background: #fdf3dc;
   border-color: #f0d58c;
   text-align: center;
-  display: flex;
-  flex-direction: column;
   justify-content: center;
 }
 
