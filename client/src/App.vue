@@ -30,6 +30,10 @@ function handleLogout() {
   result.value = null;
   error.value = "";
   success.value = "Successfully logged out!";
+
+  setTimeout(() => {
+    success.value = "";
+  }, 3000);
 }
 
 async function runSelection(recruits: number, skip: number) {
