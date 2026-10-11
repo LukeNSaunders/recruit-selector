@@ -7,13 +7,14 @@ defineProps<{
 </script>
 
 <template>
-  <div class="results">
+  <p v-if="result.selectedRecruits.length === 0" class="no-selection">
+    Only one recruit was entered, so no one was selected. Enter at least 2 recruits to run a
+    selection.
+  </p>
+
+  <div v-else class="results">
     <section class="card">
       <h2>Selected recruits</h2>
-
-      <p v-if="result.selectedRecruits.length === 0" class="muted">
-        Only one recruit, so no one was selected.
-      </p>
 
       <ol class="selected-list">
         <li v-for="recruit in result.selectedRecruits" :key="recruit">
@@ -80,6 +81,14 @@ defineProps<{
   line-height: 1;
   margin: 12px 0;
   color: #4b5d3a;
+}
+.no-selection {
+  padding: 12px 16px;
+  color: #a8322a;
+  background: #fbeae8;
+  border: 1px solid #f0c4be;
+  border-radius: 8px;
+  font-weight: 600;
 }
 
 @media (max-width: 600px) {
