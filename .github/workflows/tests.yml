@@ -1,0 +1,63 @@
+name: Tests
+
+# Run on every push to main, and on every pull request
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  # ---------- C# unit and integration tests ----------
+  backend:
+    name: Backend tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
+
+      - name: Install .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Run the C# tests
+        run: dotnet test server.Tests
+
+  # ---------- Vue build and Playwright end-to-end tests ----------
+  frontend:
+    name: Frontend build and end-to-end tests
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: client
+
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: client/package-lock.json
+
+      # Start .NET server for end to end tests
+      - name: Install .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Install the Vue app's packages
+        run: npm ci
+
+      - name: Type-check and build the Vue app
+        run: npm run build
+
+      - name: Install the browser for Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Run the end-to-end tests
+        run: npm run test:e2e
