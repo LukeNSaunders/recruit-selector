@@ -53,6 +53,9 @@ jobs:
       - name: Install the Vue app's packages
         run: npm ci
 
+      - name: Lint the Vue code
+        run: npm run lint
+
       - name: Type-check and build the Vue app
         run: npm run build
 
