@@ -7,5 +7,5 @@ services:
       # Demo settings for running the app locally only.
       # The live Azure app uses its own, secret values.
       Jwt__Key: "local-demo-signing-key-that-is-at-least-32-chars"
-      Auth__Username: "sergeant"
-      Auth__Password: "next-year"
+      Auth__Username: "demo"
+      Auth__Password: "demo-password"

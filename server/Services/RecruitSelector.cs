@@ -13,7 +13,7 @@ public class RecruitSelector
             circle.Add(i);
         }
 
-        // The list will hold recruits in the order they get picked
+        // The list holds recruits in the order they get picked
         var selected = new List<int>();
 
         // Sergeant starts at the first recruit

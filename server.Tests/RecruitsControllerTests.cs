@@ -21,8 +21,8 @@ public class RecruitsControllerTests
 
     // The smallest and largest allowed values should still work.
     [Theory]
-    [InlineData(1, 0)]       // smallest allowed
-    [InlineData(100, 100)]   // largest allowed
+    [InlineData(1, 0)]      
+    [InlineData(100, 100)]  
     public void Get_LimitValues_ReturnsOk(int n, int k)
     {
         var response = controller.Get(n, k);

@@ -7,7 +7,6 @@ on:
   pull_request:
 
 env:
-  # The name of your Azure App Service (just the name, not the full web address)
   AZURE_WEBAPP_NAME: recruit-selector
 
 jobs:
@@ -48,7 +47,6 @@ jobs:
           cache: npm
           cache-dependency-path: client/package-lock.json
 
-      # The end-to-end tests start the real C# server, so .NET is needed here too
       - name: Install .NET
         uses: actions/setup-dotnet@v4
         with:
@@ -73,7 +71,6 @@ jobs:
   deploy:
     name: Deploy to Azure
     needs: [backend, frontend]
-    # Only deploy pushes to main, never pull requests
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
@@ -102,7 +99,6 @@ jobs:
       - name: Build the C# server
         run: dotnet publish server/Server.csproj -c Release -o publish
 
-      # The server hands out the Vue app from its wwwroot folder, just like in Docker
       - name: Add the Vue app to the server
         run: |
           mkdir -p publish/wwwroot
