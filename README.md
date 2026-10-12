@@ -50,7 +50,7 @@ Open http://localhost:5173.
 cd server.Tests
 dotnet test
 
-# Lint and end-to-end tests (stop anything running on port 5000 first)
+# Lint and end-to-end tests
 cd client
 npm run lint
 npx playwright install chromium
