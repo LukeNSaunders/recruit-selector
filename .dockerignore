@@ -1,0 +1,8 @@
+# Keep build output, packages and git history out of the Docker build
+**/bin
+**/obj
+**/node_modules
+client/dist
+client/test-results
+client/playwright-report
+.git
