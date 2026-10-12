@@ -1,10 +1,14 @@
-name: Tests
+name: Test and deploy
 
 # Run on every push to main, and on every pull request
 on:
   push:
     branches: [main]
   pull_request:
+
+env:
+  # The name of your Azure App Service (just the name, not the full web address)
+  AZURE_WEBAPP_NAME: recruit-selector
 
 jobs:
   # ---------- C# unit and integration tests ----------
@@ -44,7 +48,7 @@ jobs:
           cache: npm
           cache-dependency-path: client/package-lock.json
 
-      # Start .NET server for end to end tests
+      # The end-to-end tests start the real C# server, so .NET is needed here too
       - name: Install .NET
         uses: actions/setup-dotnet@v4
         with:
@@ -64,3 +68,49 @@ jobs:
 
       - name: Run the end-to-end tests
         run: npm run test:e2e
+
+  # ---------- Deploy to Azure (only if both test jobs pass) ----------
+  deploy:
+    name: Deploy to Azure
+    needs: [backend, frontend]
+    # Only deploy pushes to main, never pull requests
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: client/package-lock.json
+
+      - name: Install .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Build the Vue app
+        working-directory: client
+        run: |
+          npm ci
+          npm run build
+
+      - name: Build the C# server
+        run: dotnet publish server/Server.csproj -c Release -o publish
+
+      # The server hands out the Vue app from its wwwroot folder, just like in Docker
+      - name: Add the Vue app to the server
+        run: |
+          mkdir -p publish/wwwroot
+          cp -r client/dist/. publish/wwwroot/
+
+      - name: Deploy to Azure App Service
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: publish
