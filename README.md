@@ -13,7 +13,6 @@ Works out which recruit has to come back next year. C# (.NET 10) API with a Vue 
 Needs Docker Desktop.
 
 ```
-cp .env.example .env
 docker compose up --build
 ```
 
