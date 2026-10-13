@@ -16,12 +16,12 @@ function onSubmit() {
 <template>
   <form class="card recruit-form" @submit.prevent="onSubmit">
     <label>
-      <span>Number of recruits (n) <span class="hint">1 to 100</span></span>
+      <span>Number of recruits <span class="hint">1 to 100</span></span>
       <input v-model.number="recruits" type="number" min="1" max="100" required />
     </label>
 
     <label>
-      <span>Recruits to skip (k) <span class="hint">0 to 100</span></span>
+      <span>Recruits to skip <span class="hint">0 to 100</span></span>
       <input v-model.number="skip" type="number" min="0" max="100" required />
     </label>
 
