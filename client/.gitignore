@@ -40,4 +40,4 @@ __screenshots__/
 
 # Playwright
 test-results/
-playwright-report/.vscode/
+playwright-report/
