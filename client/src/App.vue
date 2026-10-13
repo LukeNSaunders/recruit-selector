@@ -64,9 +64,8 @@ async function runSelection(recruits: number, skip: number) {
     </header>
 
     <p class="intro">
-      Enter how many recruits there are and how many the sergeant skips each time. We'll
-      show who gets a position, in order, and the one recruit who has to come back next
-      year.
+      Enter how many recruits there are and how many the sergeant skips each time. We'll show who
+      gets a position, in order, and the one recruit who has to come back next year.
     </p>
 
     <RecruitForm @submit="runSelection" />
@@ -74,7 +73,10 @@ async function runSelection(recruits: number, skip: number) {
     <p v-if="success" class="success">{{ success }}</p>
     <p v-if="error" class="error">{{ error }}</p>
 
-    <RecruitResults v-if="result" :result="result" />
+    <!-- Fills the rest of the screen -->
+    <div v-if="result" class="results-area">
+      <RecruitResults :result="result" />
+    </div>
 
     <LoginModal v-if="showLogin" @close="showLogin = false" @logged-in="handleLoggedIn" />
   </main>
@@ -82,9 +84,18 @@ async function runSelection(recruits: number, skip: number) {
 
 <style scoped>
 .page {
-  max-width: 800px;
-  margin: 48px auto;
-  padding: 0 16px;
+  max-width: 1000px;
+  height: 100vh;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.results-area {
+  flex: 1;
+  min-height: 0;
 }
 
 .header {
@@ -99,13 +110,18 @@ async function runSelection(recruits: number, skip: number) {
   font-size: 14px;
 }
 
+h1 {
+  margin: 0;
+}
+
 .intro {
   color: #5a645a;
   line-height: 1.5;
-  margin-bottom: 24px;
+  margin: 8px 0 16px;
 }
 
 .success {
+  margin: 0 0 16px;
   padding: 12px 16px;
   color: #2f4a22;
   background: #e6f0de;
@@ -115,7 +131,14 @@ async function runSelection(recruits: number, skip: number) {
 }
 
 .error {
+  margin: 0 0 16px;
   color: #a8322a;
   font-weight: 600;
+}
+
+@media (max-width: 700px) {
+  .page {
+    height: auto;
+  }
 }
 </style>
