@@ -14,17 +14,15 @@ function onSubmit() {
 </script>
 
 <template>
-  <form class="card" @submit.prevent="onSubmit">
+  <form class="card recruit-form" @submit.prevent="onSubmit">
     <label>
-      Number of recruits (n)
+      <span>Number of recruits (n) <span class="hint">1 to 100</span></span>
       <input v-model.number="recruits" type="number" min="1" max="100" required />
-      <span class="hint">Between 1 and 100</span>
     </label>
 
     <label>
-      Recruits to skip (k)
+      <span>Recruits to skip (k) <span class="hint">0 to 100</span></span>
       <input v-model.number="skip" type="number" min="0" max="100" required />
-      <span class="hint">Between 0 and 100</span>
     </label>
 
     <button type="submit">Run selection</button>
@@ -32,7 +30,12 @@ function onSubmit() {
 </template>
 
 <style scoped>
+.recruit-form {
+  margin-bottom: 0;
+}
+
 .hint {
+  margin-left: 6px;
   font-size: 13px;
   font-weight: 400;
   color: #7a8475;
