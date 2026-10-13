@@ -73,7 +73,6 @@ async function runSelection(recruits: number, skip: number) {
     <p v-if="success" class="success">{{ success }}</p>
     <p v-if="error" class="error">{{ error }}</p>
 
-    <!-- Fills the rest of the screen -->
     <div v-if="result" class="results-area">
       <RecruitResults :result="result" />
     </div>
@@ -136,7 +135,7 @@ h1 {
   font-weight: 600;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 750px) {
   .page {
     height: auto;
   }
