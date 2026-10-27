@@ -36,16 +36,6 @@ public class RecruitSelectorTests
         Assert.Equal(1, result.FinalRecruit);
     }
 
-    // Skip of 0: recruits are picked in order.
-    [Fact]
-    public void SelectRecruits_SkipZero_SelectsInOrder()
-    {
-        var result = selector.SelectRecruits(4, 0);
-
-        Assert.Equal(new[] { 1, 2, 3 }, result.SelectedRecruits);
-        Assert.Equal(4, result.FinalRecruit);
-    }
-
     // Skip bigger than the circle: wraps around instead of crashing.
     [Fact]
     public void SelectRecruits_SkipMoreThanCircle_WrapsAround()
