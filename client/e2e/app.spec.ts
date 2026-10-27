@@ -83,7 +83,7 @@ test('the user gets a different answer for different numbers', async ({ page }) 
 
 test('the user sees a message when there is only one recruit', async ({ page }) => {
   await logIn(page)
-  await runSelection(page, '1', '0')
+  await runSelection(page, '1', '1')
 
   await expect(page.getByText('Only one recruit was entered, so no one was selected.')).toBeVisible()
   await expect(page.locator('.final-number')).toBeHidden()
