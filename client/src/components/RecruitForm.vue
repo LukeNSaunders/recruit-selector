@@ -21,8 +21,8 @@ function onSubmit() {
     </label>
 
     <label>
-      <span>Recruits to skip <span class="hint">0 to 100</span></span>
-      <input v-model.number="skip" type="number" min="0" max="100" required />
+      <span>Recruits to skip <span class="hint">1 to 100</span></span>
+      <input v-model.number="skip" type="number" min="1" max="100" required />
     </label>
 
     <button type="submit">Run selection</button>
