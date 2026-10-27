@@ -29,9 +29,9 @@ public class RecruitsController : ControllerBase
             return BadRequest($"The number of recruits can't be more than {MaxRecruits:N0}.");
         }
 
-        if (skip < 0)
+        if (skip < 1)
         {
-            return BadRequest("The number to skip can't be negative. Enter 0 or more.");
+            return BadRequest("At least one recruit must be skipped.");
         }
 
         if (skip > MaxSkip)
